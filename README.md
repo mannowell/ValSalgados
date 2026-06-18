@@ -1,5 +1,11 @@
 # ValLanches e Salgados 🥟
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26.svg?logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6.svg?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![FontAwesome](https://img.shields.io/badge/FontAwesome-6.0-528DD7.svg?logo=fontawesome&logoColor=white)](https://fontawesome.com/)
+[![Google Fonts](https://img.shields.io/badge/Google%20Fonts-Oswald%20%26%20Roboto-4285F4.svg?logo=googlefonts&logoColor=white)](https://fonts.google.com/)
+
 **ValLanches** é uma landing page moderna e elegante para venda de salgados artesanais. Desenvolvida com foco em alta conversão e estética premium (Glassmorphism e Dark Mode), a página apresenta os produtos, combos promocionais e facilita o contato direto com o cliente via WhatsApp.
 
 ## 🚀 Funcionalidades
@@ -36,5 +42,22 @@ Atualmente, alguns blocos utilizam imagens vindas da plataforma Unsplash (ex: im
 Não é necessário rodar servidores, configurar pacotes ou backend.
 Basta abrir o `index.html` em qualquer navegador moderno.
 
----
-*Desenvolvido em HTML Puro e CSS Moderno.*
+## 👤 Autor
+
+**Wellison Oliveira** ([@mannowell](https://github.com/mannowell))
+
+Desenvolvido em HTML Puro e CSS Moderno com ❤️.
+
+## 📄 Licença
+
+Este projeto está licenciado sob a licença **MIT**. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Siga os passos abaixo:
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/MinhaFeature`)
+3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`)
+4. Push para a branch (`git push origin feature/MinhaFeature`)
+5. Abra um Pull Request
