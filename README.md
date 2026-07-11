@@ -34,10 +34,6 @@ ValSalgados/
 └── README.md
 ```
 
-## 📦 Como Usar
-
-Não é necessário rodar servidores, configurar pacotes ou backend.
-Basta abrir o `index.html` em qualquer navegador moderno.
 
 ## 👤 Autor
 
