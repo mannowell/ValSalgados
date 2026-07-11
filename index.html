@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Val Lanches e Salgados - Artesanais</title>
+    <meta name="description" content="Val Lanches e Salgados - Salgados artesanais feitos com paixão. Coxinha, Risole, Bolinha de Queijo e muito mais. Peça pelo WhatsApp!">
     <link
         href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700;900&display=swap"
         rel="stylesheet">
@@ -20,11 +21,11 @@
                 <h1>VAL<span>Salgados</span></h1>
             </div>
 
-            <div class="menu-toggle" id="menuToggle">
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
 
             <nav class="nav-menu" id="navMenu">
                 <a href="#promocao" class="nav-link active">Promoção</a>
@@ -75,8 +76,8 @@
                         <li><i class="fas fa-check"></i> 25 Unidades de Bolinha de Queijo</li>
                     </ul>
 
-                    <button class="btn btn-primary btn-adicionar-carrinho" data-nome="Kit festa 1 Cento - Promoção"
-                        data-preco="50">
+                    <button class="btn btn-primary btn-adicionar-carrinho" data-name="Kit Festa 1 Cento - Promoção"
+                        data-price="50">
                         Adicionar ao Carrinho
                     </button>
                 </div>
@@ -242,7 +243,7 @@
                         </div>
                     </div>
 
-                    <a href="https://goo.gl/maps/example" target="_blank" class="btn btn-amarelo">
+                    <a href="https://www.google.com/maps/search/Unidade+105+Rua+01+31+Cidade+Operaria+Sao+Luis+MA" target="_blank" class="btn btn-amarelo" rel="noopener noreferrer">
                         <i class="fas fa-directions"></i> Como Chegar
                     </a>
                 </div>
@@ -288,7 +289,7 @@
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2024 Val Salgados. Todos os direitos reservados. Design by <span
+                <p>&copy; 2025 Val Salgados. Todos os direitos reservados. Design by <span
                         class="highlight">Manno</span>.</p>
             </div>
         </div>
@@ -381,8 +382,8 @@
                 document.querySelectorAll('.btn-adicionar-carrinho').forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const target = e.target.closest('button');
-                        const nome = target.getAttribute('data-name') || target.getAttribute('data-nome');
-                        const preco = parseFloat(target.getAttribute('data-price') || target.getAttribute('data-preco'));
+                        const nome = target.getAttribute('data-name');
+                        const preco = parseFloat(target.getAttribute('data-price'));
                         this.adicionarItem({ nome, preco });
 
                         // Feedback animado
@@ -446,18 +447,19 @@
                 let html = '';
                 this.itens.forEach(item => {
                     const subtotal = item.preco * item.quantidade;
+                    const safeNome = escapeHtml(item.nome);
                     html += `
                         <div class="cart-item">
                             <div class="item-details">
-                                <h4>${item.nome}</h4>
+                                <h4>${safeNome}</h4>
                                 <p>R$ ${subtotal.toFixed(2)}</p>
                             </div>
                             <div class="item-qty">
-                                <button onclick="carrinho.atualizarQuantidade('${item.nome}', ${item.quantidade - 1})">-</button>
+                                <button class="qty-btn" data-action="decrease" data-nome="${safeNome}">-</button>
                                 <span>${item.quantidade}</span>
-                                <button onclick="carrinho.atualizarQuantidade('${item.nome}', ${item.quantidade + 1})">+</button>
+                                <button class="qty-btn" data-action="increase" data-nome="${safeNome}">+</button>
                             </div>
-                            <button class="close-modal" onclick="carrinho.removerItem('${item.nome}')" style="font-size: 1rem;">
+                            <button class="close-modal remove-btn" data-nome="${safeNome}" style="font-size: 1rem;">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -466,6 +468,27 @@
 
                 this.carrinhoItens.innerHTML = html;
                 this.carrinhoTotal.textContent = `R$ ${this.calcularTotal().toFixed(2)}`;
+
+                this.carrinhoItens.querySelectorAll('.qty-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const nome = e.target.closest('button').dataset.nome;
+                        const action = e.target.closest('button').dataset.action;
+                        const item = this.itens.find(i => i.nome === nome);
+                        if (!item) return;
+                        if (action === 'decrease') {
+                            this.atualizarQuantidade(nome, item.quantidade - 1);
+                        } else {
+                            this.atualizarQuantidade(nome, item.quantidade + 1);
+                        }
+                    });
+                });
+
+                this.carrinhoItens.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const nome = e.target.closest('button').dataset.nome;
+                        this.removerItem(nome);
+                    });
+                });
             }
 
             abrirModal() {
@@ -532,11 +555,18 @@
         style.innerHTML = `@keyframes slideIn { from { transform: translateX(100px); opacity:0; } to { transform: translateX(0); opacity:1; } }`;
         document.head.appendChild(style);
 
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
+        }
+
         const carrinho = new Carrinho();
 
         // Menu Mobile
         document.getElementById('menuToggle').addEventListener('click', function () {
             this.classList.toggle('active');
+            this.setAttribute('aria-expanded', this.classList.contains('active'));
             document.getElementById('navMenu').classList.toggle('active');
         });
 
